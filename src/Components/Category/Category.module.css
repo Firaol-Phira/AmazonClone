@@ -1,6 +1,8 @@
-.category{
-    height: 350px;
-    width: 350px;
+.category {
+    width: 100%;                   /* was 350px */
+    min-width: 0;                  /* lets the card shrink below its content size */
+    height: 200px;
+    box-sizing: border-box;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     overflow: hidden;
@@ -30,10 +32,13 @@ font-size: 12px;
 font-weight: bold;
 color: rgb(9, 132, 209);
 }
-.category_container{
+.category_container {
     position: relative;
     margin-top: -10%;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    place-items: center;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    place-items: stretch;          /* was center: stretch lets cards fill the column */
 }
