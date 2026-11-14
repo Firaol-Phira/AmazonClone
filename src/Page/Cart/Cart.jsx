@@ -5,12 +5,26 @@ import { DataContext } from '../../Components/DataProvider/DataProvider'
 import ProductCard from '../../Components/Product/ProductCard'
 import CurrencyFormat from '../../Components/CurrencyFormat/CurrencyFormat'
 import { Link } from 'react-router-dom'
+import { Type } from '../../Utility/action.type'
+import { IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
+
 function Cart() {
   const [{basket,user},dispatch]=useContext(DataContext)
 
   const total =basket.reduce((amount,item)=>{
     return item.price * item.amount + amount
   },0)
+  const increament=(item)=>{
+    dispatch({
+      type:Type.ADD_TO_BASKET,item
+    })
+  }
+  const decreament=(id)=>{
+    dispatch({
+      type:Type.REMOVE_FROM_BASKET,id
+    })
+  }
   return (
     <Layout>
 
@@ -20,13 +34,35 @@ function Cart() {
           <h3>Your Shopping basket</h3>
           <hr />
           {basket?.length==0?(<p>Opps ! No item in your cart</p>):(basket?.map((item,i)=>{
-            return <ProductCard
-            key={i}
-            product={item}
-            renderdesc={true}
-            flex={true}
-            renderadd={false}
-            />
+            return (
+              <section className={classes.cart_product}>
+                <ProductCard
+                  key={i}
+                  product={item}
+                  renderdesc={true}
+                  flex={true}
+                  renderadd={false}
+                />
+                <div className={classes.btn_container}>
+                  <button
+                    className={classes.btn}
+                    onClick={() => increament(item)}
+                  >
+                    <IoIosArrowUp size={20}/>
+                  </button>
+                  <span>{item.amount}</span>
+                  <button
+                    className={classes.btn}
+                    onClick={() => decreament(item.id)}
+                  >
+                    <IoIosArrowDown size={20}/>
+                  </button>
+                </div>
+              </section>
+            );
+            
+         
+
           }))}
         </div>
 {basket?.length!==0&&
