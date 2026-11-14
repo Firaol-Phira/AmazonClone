@@ -24,22 +24,26 @@ console.log(res.data);
   
   return (
     <Layout>
-      {isLoading? (<Loader/>):(<section>
-        <h1 style={{padding:"30px"}}>Results</h1>
-        <p style={{padding:"30px"}}>Category / {categoryName}</p>
-        <hr />
-        <div className={classes.product_container}>
-{result?.map((product)=>(
-    <ProductCard key={product.id}
-    product={product}/>
-))}
-
-
-        </div>
-      </section> )}
-      
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <section>
+          <h1 style={{ padding: "30px" }}>Results</h1>
+          <p style={{ padding: "30px" }}>Category / {categoryName}</p>
+          <hr />
+          <div className={classes.product_container}>
+            {result?.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                renderadd={true}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </Layout>
-  )
+  );
 }
 
 export default Result

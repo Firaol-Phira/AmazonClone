@@ -24,13 +24,18 @@ function ProductDetail() {
    },[productId])
   return (
     <Layout>
-      {isLoading? (<Loader/>):<ProductCard product={product}
-      flex={true}
-      renderdesc={true}
-     />}
-     
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <ProductCard
+          product={product}
+          flex={true}
+          renderdesc={true}
+          renderadd={true}
+        />
+      )}
     </Layout>
-  )
+  );
 
 }
 export default ProductDetail

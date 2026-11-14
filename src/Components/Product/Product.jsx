@@ -20,19 +20,20 @@ function Product() {
     },[])
   return (
     <>
-    {
-
-       isLoading?(<Loader/>):(  <section className={classes.product_container}>{
-      
- products.map((singleProduct)=>(
-     <ProductCard product={singleProduct} key={singleProduct.id}/>
-  ))
-     } </section>)
-    }
-   
-    
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <section className={classes.product_container}>
+          {products.map((singleProduct) => (
+            <ProductCard
+              product={singleProduct}
+              key={singleProduct.id}
+              renderadd={true}
+            />
+          ))}{" "}
+        </section>
+      )}
     </>
-  
   );
 }
 
