@@ -7,7 +7,7 @@ function Product() {
 
     useEffect(()=>{
         axios.get("https://fakestoreapi.com/products").then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setProducts(res.data)
         }).catch((err)=>{
             console.log(err)
