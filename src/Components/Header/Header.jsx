@@ -62,7 +62,7 @@ function Header() {
             </Link>
 
             {/* 3 COMPONENTS */}
-            <Link to="">
+            <Link to="/auth">
               <p>Sign IN</p>
               <span>Account & Lists</span>
             </Link>

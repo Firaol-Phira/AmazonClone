@@ -4,7 +4,7 @@ import Landing from "./Page/Landing/Landing";
 import Payment from "./Page/Payment/Payment";
 import Order from "./Page/Orders/Order";
 import Cart from "./Page/Cart/Cart";
-import Signup from "./Page/Auth/Signup";
+import Auth from "./Page/Auth/Auth";
 import Result from "./Page/Result/Result";
 import ProductDetail from "./Page/ProductDetail/ProductDetail";
 function Routing() {
@@ -12,7 +12,7 @@ function Routing() {
     <Router>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/auth" element={<Signup />} />
+        <Route path="/auth" element={<Auth />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/order" element={<Order />} />
         <Route path="/category/:categoryName" element={<Result />} />
