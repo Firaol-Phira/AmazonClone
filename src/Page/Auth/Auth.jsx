@@ -1,57 +1,76 @@
-import React, { useState,useContext } from 'react'
+import React, { useState, useContext } from "react";
 import classes from "./Auth.module.css";
-import {Link} from "react-router-dom";
-import {auth} from "../../Utility/firebase"
-import {signInWithEmailAndPassword,createUserWithEmailAndPassword} from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../../Utility/firebase";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
 import { DataContext } from "../../Components/DataProvider/DataProvider";
-import {Type} from "../../Utility/action.type"
+import { Type } from "../../Utility/action.type";
+
+import { BeatLoader } from "react-spinners";
 
 function Auth() {
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [error, seterror] = useState("");
 
-  const [email,setemail]=useState("");
-   const [password, setpassword] = useState("");
-    const [error, seterror] = useState("");
+  const [loading, setloading] = useState({
+    signin: false,
+    signup: false,
+  });
 
-    const [{user},dispatch]=useContext(DataContext)
-    // console.log(password,email)
+  const [{ user }, dispatch] = useContext(DataContext);
 
-          console.log(user);
+  const navigate = useNavigate();
+  // console.log(password,email)
 
+  console.log(user);
 
-
-     const authhandler =async(e)=>{
-    e.preventDefault()
+  const authhandler = async (e) => {
+    e.preventDefault();
     // console.log(e.target.name)
-    if(e.target.name =="signin"){
-      signInWithEmailAndPassword(auth,email,password).then((userinfo)=>{
-        // console.log(userinfo)
-        dispatch({
-          type:Type.SET_USER,
-          user:userinfo.user
+    if (e.target.name == "signin") {
+      setloading({ ...loading, signin: true });
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userinfo) => {
+          // console.log(userinfo)
+          dispatch({
+            type: Type.SET_USER,
+            user: userinfo.user,
+          });
+          setloading({ ...loading, signin: false });
+
+          navigate("/");
         })
-      }).catch((err)=>{
-        console.log(err)
-
-      })
-    } 
-    else{
-      createUserWithEmailAndPassword(auth,email,password).then((userinfo)=>{
-        // console.log(userinfo);
-        dispatch({
-          type: Type.SET_USER,
-          user: userinfo.user,
+        .catch((err) => {
+          seterror(err.message);
+          setloading({ ...loading, signin: false });
         });
-      }).catch((err)=>{
-        console.log(err);
-      })
+    } else {
+      setloading({ ...loading, signup: true });
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userinfo) => {
+          // console.log(userinfo);
+          dispatch({
+            type: Type.SET_USER,
+            user: userinfo.user,
+          });
+          setloading({ ...loading, signup: false });
+          navigate("/");
+        })
+        .catch((err) => {
+          seterror(err.message);
+          setloading({ ...loading, signup: false });
+        });
     }
-     }
-
+  };
 
   return (
     <section className={classes.Auth}>
-      <Link>
+      <Link to="/">
         <img
           src="https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo.png"
           alt=""
@@ -86,7 +105,11 @@ function Auth() {
             name="signin"
             className={classes.login_signin}
           >
-            Sign in
+            {loading.signin ? (
+              <BeatLoader color="#85b42f" size={17} />
+            ) : (
+              " Sign In"
+            )}
           </button>
         </form>
         <p>
@@ -103,8 +126,15 @@ function Auth() {
           name="signup"
           className={classes.login_register}
         >
-          Create your Amazon Account
+          {loading.signup ? (
+            <BeatLoader color="#85b42f" size={17} />
+          ) : (
+            "  Create your Amazon Account"
+          )}
         </button>
+        {error && (
+          <small style={{ paddingTop: "5px", color: "red" }}>{error}</small>
+        )}
       </div>
     </section>
   );
