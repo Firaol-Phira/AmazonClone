@@ -7,13 +7,28 @@ import Cart from "./Page/Cart/Cart";
 import Auth from "./Page/Auth/Auth";
 import Result from "./Page/Result/Result";
 import ProductDetail from "./Page/ProductDetail/ProductDetail";
+import { CheckoutElementsProvider } from "@stripe/react-stripe-js/checkout";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
 function Routing() {
+
+  const stripePromise = loadStripe(
+    "pk_test_51Ug0HVCQTRDHU9oFTZucGdLYnS1qxIMFcIgsAOu9OstpYbxWyBjVBTvzi5morx0SagxtjyFJTe7z03j4FGtQUCVj00Ba4JQqwV",
+  );
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/auth" element={<Auth />} />
-        <Route path="/payment" element={<Payment />} />
+        <Route path="/payment" 
+        
+        element={
+        
+            <Elements stripe={stripePromise} >
+      <Payment />
+    </Elements>
+        } />
         <Route path="/order" element={<Order />} />
         <Route path="/category/:categoryName" element={<Result />} />
         <Route path="/products/:productId" element={<ProductDetail />} />
