@@ -65,7 +65,7 @@ function Payment() {
         });
 
       setprocessing(false);
-      navigate("/order",{state:{msg:"you have placed new Order"}})
+      navigate("/order",{state:{msg:"you have placed new Order."}})
     } catch (error) {
       console.log(error);
       setprocessing(false);
