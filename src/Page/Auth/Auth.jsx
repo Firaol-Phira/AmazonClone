@@ -127,8 +127,8 @@ function Auth() {
         </form>
         <p>
           By sign in you agree to the amazon fake clone condition of use and
-          sale . please see our privacy notice, our cookies notice and our
-          interest based ads notice
+          sale. Please see our privacy notice, our cookies notice and our
+          interest based ads notice ,okay ?
         </p>
 
         {/* create account */}
