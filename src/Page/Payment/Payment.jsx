@@ -11,9 +11,10 @@ import { ClipLoader } from "react-spinners";
 import { db } from "../../Utility/firebase";
 import { BsKey } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { Type } from "../../Utility/action.type";
 
 function Payment() {
-  const [{ user, basket }] = useContext(DataContext);
+  const [{ user, basket },dispatch] = useContext(DataContext);
   const totalItem = basket?.reduce((amount, item) => {
     return item.amount + amount;
   }, 0);
@@ -53,6 +54,7 @@ function Payment() {
 
       //3, order firestore save and cleare basket
 
+
       await db
         .collection("users")
         .doc(user.uid)
@@ -63,7 +65,9 @@ function Payment() {
           amount: paymentIntent.amount,
           created: paymentIntent.created,
         });
+//empty the basket
 
+dispatch({type:Type.EMPTY_BASKET})
       setprocessing(false);
       navigate("/order",{state:{msg:"you have placed new Order."}})
     } catch (error) {
